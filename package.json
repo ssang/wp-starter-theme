@@ -1,0 +1,24 @@
+{
+  "name": "crew",
+  "private": true,
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@roots/sage": "5.8.7",
+    "postcss-easy-import": "^4.0.0",
+    "vite": "^3.0.0"
+  },
+  "dependencies": {
+    "alpinejs": "^3.10.4",
+    "tailwindcss": "^3.2.0"
+  }
+}
