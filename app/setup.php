@@ -6,44 +6,29 @@
 
 namespace App;
 
-use Idleberg\WordpressViteAssets\WordpressViteAssets;
+use Kucrut\Vite;
 
-$viteAssets = new WordpressViteAssets(get_stylesheet_directory() . '/dist/manifest.json', get_stylesheet_directory_uri() . '/dist/assets');
-
-add_action('wp_head', function () use ($viteAssets) {
-    $scriptTag = $viteAssets->getScriptTag('resources/assets/js/app.js', [
-        'integrity' => false,
-        'crossorigin' => false
-    ]);
-
-    if ($scriptTag) {
-        echo $scriptTag . PHP_EOL;
-    }
-}, 0, 1);
-
-add_action('wp_head', function () use ($viteAssets) {
-    $styleTags = $viteAssets->getStyleTags('resources/assets/js/app.js', [
-        'integrity' => false,
-        'crossorigin' => false
-    ]);
-
-    foreach ($styleTags as $styleTag) {
-        echo $styleTag . PHP_EOL;
-    }
-}, 0, 1);
-
-add_action( 'wp_enqueue_scripts', function () {
-    wp_dequeue_style('wp-block-library');
+add_action('wp_enqueue_scripts', function (): void {
+    Vite\enqueue_asset(
+        get_stylesheet_directory() . '/dist',
+        './resources/assets/js/app.js',
+        [
+            'handle' => 'crew-app',
+            'in-footer' => true,
+        ]
+    );
 });
 
-/**
- * Register the theme assets with the block editor.
- *
- * @return void
- */
-add_action('enqueue_block_editor_assets', function () {
-    wp_enqueue_style('crew', get_stylesheet_directory_uri() . '/dist/assets/editor.css?' . filemtime(get_stylesheet_directory() . '/dist/assets/editor.css'));
-}, 100);
+add_action('enqueue_block_editor_assets', function (): void {
+    Vite\enqueue_asset(
+        get_stylesheet_directory() . '/dist',
+        './resources/assets/js/editor.js',
+        [
+            'handle' => 'crew-editor',
+            'in-footer' => true,
+        ]
+    );
+});
 
 /**
  * Register the initial theme setup.
