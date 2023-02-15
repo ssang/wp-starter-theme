@@ -1,7 +1,5 @@
-import 'vite/modulepreload-polyfill'
-
-import Alpine from 'alpinejs'
+import './_bootstrap';
 
 import '../css/app.css'
  
-Alpine.start()
+window.Alpine.start()

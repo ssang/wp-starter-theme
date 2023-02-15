@@ -14,7 +14,7 @@
     "devDependencies": {
         "@kucrut/vite-for-wp": "^0.5.2",
         "postcss-easy-import": "^4.0.0",
-        "vite": "^3.0.0"
+        "vite": "^4.0.0"
     },
     "dependencies": {
         "@wordpress/browserslist-config": "^5.7.0",

@@ -4,4 +4,6 @@
 .env
 .budfiles
 npm-debug.log
+/dist
+bun.lockb
 yarn-error.log
