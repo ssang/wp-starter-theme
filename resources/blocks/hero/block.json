@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "refuel/hero",
+	"version": "0.1.0",
+	"title": "Hero",
+	"category": "custom",
+	"icon": "format-gallery",
+	"description": "Hero block to showcase multiple images",
+	"supports": {
+		"html": false
+	},
+  "acf": {
+    "renderTemplate": "resources/views/blocks/hero.blade.php",
+    "renderCallback": "crew_block_render_callback"
+  },
+	"textdomain": "refuel",
+	"editorScript": "file:./index.js"
+}
