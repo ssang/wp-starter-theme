@@ -11,23 +11,38 @@ use Kucrut\Vite;
 add_action('wp_enqueue_scripts', function (): void {
     Vite\enqueue_asset(
         get_stylesheet_directory() . '/dist',
-        './resources/assets/js/app.js',
+        'resources/assets/js/app.js',
         [
+            'css-media' => 'all',
             'handle' => 'crew-app',
             'in-footer' => true,
         ]
     );
 });
 
-add_action('enqueue_block_editor_assets', function (): void {
+add_action('enqueue_block_editor_assets', function (): void { 
     Vite\enqueue_asset(
         get_stylesheet_directory() . '/dist',
-        './resources/assets/js/editor.js',
+        'resources/assets/js/editor.js',
         [
             'handle' => 'crew-editor',
             'in-footer' => true,
+            'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
         ]
     );
+    
+    Vite\enqueue_asset(
+        get_stylesheet_directory() . '/dist',
+        'resources/assets/js/app.js',
+        [
+            'handle' => 'crew-app',
+            'css-only' => true
+        ]
+    );
+});
+
+add_action('wp_enqueue_scripts', function () {
+    wp_dequeue_style('wp-block-library');
 });
 
 /**

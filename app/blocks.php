@@ -19,30 +19,49 @@ add_filter('block_categories_all' , function($categories) {
     return array_merge([
         [
             'slug'  => 'custom',
-            'title' => '4 Refuel'
+            'title' => 'Crew'
         ]
     ], $categories);
 });
 
 add_action('init', function () {
-    $blocks = new \FilesystemIterator(get_stylesheet_directory() . '/dist/blocks');
+
+    if (! file_exists($path = get_stylesheet_directory() . '/dist/blocks')) {
+        return;
+    }
+
+    $blocks = new \FilesystemIterator($path);
 
     foreach ($blocks as $dir) {
         if (! file_exists($dir->getPathname() . '/block.json')) {
             continue;
         }
 
-        register_block_type($dir->getPathname() . '/block.json');
+        register_block_type(
+            $dir->getPathname(),
+            [
+                'render_callback' => function ($attributes, $content, $block) {
+                    $blockName = Str::after($block->name, '/');
+                    $postType = $block->context['postType'];
+
+                    if (isset($block->attributes['className'])) {
+                        $block->style = Str::of($block->attributes['className'])
+                            ->after('is-style-')
+                            ->before(' ');
+                    }
+                    
+                    try {
+                        return View::first([
+                            'blocks.' . $postType . '.' . $blockName,
+                            'blocks.partials.' . $blockName,
+                            'blocks.' . $blockName
+                        ], compact('attributes', 'block', 'content'));
+                    } catch (ViewException $e) {
+                        return '';
+                    }
+                },
+                'uses_context' => ['postType', 'postId']
+            ]
+        );
     }
 });
-
-function crew_block_render_callback($block, $content)
-{
-    $blockName = explode('/', $block['name'])[1];
-    
-    if (! file_exists(get_stylesheet_directory() . '/resources/views/blocks/' . $blockName . '.blade.php')) {
-        echo '';
-    }
-
-    echo view('blocks.' . $blockName, compact('block', 'content'));
-}
