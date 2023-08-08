@@ -39,10 +39,10 @@
     }
   },
   "require": {
-    "php": "^7.4|^8.0",
+    "php": "^8.0",
     "kucrut/vite-for-wp": "^0.5.2",
     "log1x/acf-composer": "^2.1.0",
-    "roots/acorn": "^3.0"
+    "roots/acorn": "^3.2.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "3.7.1"
