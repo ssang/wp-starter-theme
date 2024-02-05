@@ -14,19 +14,17 @@
     "blocks:build": "wp-scripts build --webpack-src-dir=./resources/blocks/ --output-path=./dist/blocks"
   },
   "devDependencies": {
-    "@wordpress/create-block": "^4.14.0",
-    "@wordpress/scripts": "^26.1.0",
-    "@kucrut/vite-for-wp": "^0.5.2",
+    "@wordpress/create-block": "^4.34.0",
+    "@wordpress/scripts": "^27.1.0",
+    "@kucrut/vite-for-wp": "^0.8.0",
     "postcss-easy-import": "^4.0.0",
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "@fontsource/cairo": "^4.5.13",
-    "@fontsource/poppins": "^4.5.10",
     "@wordpress/browserslist-config": "^5.7.0",
-    "alpinejs": "latest",
+    "alpinejs": "^3.13.5",
     "autoprefixer": "latest",
     "postcss": "latest",
-    "tailwindcss": "latest"
+    "tailwindcss": "^3.4.1"
   }
 }
