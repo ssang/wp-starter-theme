@@ -16,7 +16,7 @@ if (! function_exists('vite')) {
     }
 }
 
-if (! function_exists('option')) {
+if (! function_exists('option') && function_exists('get_field')) {
     function option($key, $default = false)
     {
         if (! str_contains($key, '.')) {
@@ -37,7 +37,7 @@ if (! function_exists('option')) {
 /**
  * Function to remove the paragraph tags from a WYSIWYG
  */
-if (! function_exists('get_wysiwyg_text')) {
+if (! function_exists('get_wysiwyg_text') && function_exists('get_field')) {
     function get_wysiwyg_text($field, $post = null)
     {
         remove_filter('acf_the_content', 'wpautop');
@@ -72,6 +72,7 @@ if (! function_exists('new_custom_post_type')) {
 				'name'               => $plural,
 				'singular_name'      => $singular,
 				'menu_name'          => $plural,
+                'archives'           => 'Archive: ' . $plural,
 				'add_new'            => 'Add ' . $singular,
 				'add_new_item'       => 'Add New ' . $singular,
 				'edit'               => 'Edit',
@@ -90,4 +91,40 @@ if (! function_exists('new_custom_post_type')) {
 
 		register_post_type($handle, $r);
 	}
+}
+
+if (! function_exists('get_image_alt')) {
+    function get_image_alt($id)
+    {
+        return get_post_meta($id, '_wp_attachment_image_alt', TRUE);
+    }
+}
+
+if (! function_exists('hexToRgb')) {
+    function hexToRgb($hex, $alpha = false)
+    {
+        $hex      = str_replace('#', '', $hex);
+        $length   = strlen($hex);
+        $rgb['r'] = hexdec($length == 6 ? substr($hex, 0, 2) : ($length == 3 ? str_repeat(substr($hex, 0, 1), 2) : 0));
+        $rgb['g'] = hexdec($length == 6 ? substr($hex, 2, 2) : ($length == 3 ? str_repeat(substr($hex, 1, 1), 2) : 0));
+        $rgb['b'] = hexdec($length == 6 ? substr($hex, 4, 2) : ($length == 3 ? str_repeat(substr($hex, 2, 1), 2) : 0));
+
+        if ($alpha) {
+            $rgb['a'] = $alpha;
+        }
+
+        return $rgb;
+    }
+}
+
+if (! function_exists('posts_url')) {
+    function posts_url($category = '') {
+        $url = get_permalink(get_option( 'page_for_posts'));
+
+        if (! empty($category)) {
+            $url = add_query_arg('category', $category, $url);
+        }
+
+        return $url;
+    }
 }

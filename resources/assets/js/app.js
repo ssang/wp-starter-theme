@@ -1,10 +1,8 @@
-import './_bootstrap';
-import './_fonts';
+import './_bootstrap'
+import './_fonts'
 
-import header from './alpine/_header'
+import './alpine'
 
 import '../css/app.css'
-
-window.Alpine.store('header', header);
  
 window.Alpine.start()

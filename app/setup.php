@@ -8,6 +8,24 @@ namespace App;
 
 use Kucrut\Vite;
 
+add_filter('vite_for_wp__production_assets', function ($assets, $manifest, $entry, $options) {
+    if (empty($manifest->data->{$entry}->imports)) return $assets;
+
+    foreach ($manifest->data->{$entry}->imports as $import) {
+        Vite\enqueue_asset(
+            get_stylesheet_directory() . '/dist',
+            $import,
+            [
+                'handle' => 'crew-app-imports',
+                'css-only' => true
+            ]
+        );
+    }
+
+    return $assets;
+
+}, 10, 4);
+
 add_action('wp_enqueue_scripts', function (): void {
     Vite\enqueue_asset(
         get_stylesheet_directory() . '/dist',
@@ -18,31 +36,32 @@ add_action('wp_enqueue_scripts', function (): void {
             'in-footer' => true,
         ]
     );
+
+    wp_localize_script('crew-app', 'wpApiSettings', [
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ]);
 });
 
-add_action('enqueue_block_editor_assets', function (): void { 
-    Vite\enqueue_asset(
-        get_stylesheet_directory() . '/dist',
-        'resources/assets/js/editor.js',
-        [
-            'handle' => 'crew-editor',
-            'in-footer' => true,
-            'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
-        ]
-    );
-    
-    Vite\enqueue_asset(
-        get_stylesheet_directory() . '/dist',
-        'resources/assets/js/app.js',
-        [
-            'handle' => 'crew-app',
-            'css-only' => true
-        ]
-    );
-});
+add_action('enqueue_block_assets', function (): void { 
+    if (is_admin()) {
+        Vite\enqueue_asset(
+            get_stylesheet_directory() . '/dist',
+            'resources/assets/js/editor.js',
+            [
+                'handle' => 'crew-editor',
+                'in-footer' => true,
+                'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
+            ]
+        );
+    }
 
-add_action('wp_enqueue_scripts', function () {
-    wp_dequeue_style('wp-block-library');
+    wp_enqueue_style('dashicons');
+
+    wp_localize_script('crew-editor', 'wpApiSettings', [
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ]);
 });
 
 /**
@@ -51,13 +70,6 @@ add_action('wp_enqueue_scripts', function () {
  * @return void
  */
 add_action('after_setup_theme', function () {
-
-    /**
-     * Disable full-site editing support.
-     *
-     * @link https://wptavern.com/gutenberg-10-5-embeds-pdfs-adds-verse-block-color-options-and-introduces-new-patterns
-     */
-    remove_theme_support('block-templates');
 
     /**
      * Register the navigation menus.
@@ -76,25 +88,11 @@ add_action('after_setup_theme', function () {
     remove_theme_support('core-block-patterns');
 
     /**
-     * Enable plugins to manage the document title.
-     *
-     * @link https://developer.wordpress.org/reference/functions/add_theme_support/#title-tag
-     */
-    add_theme_support('title-tag');
-
-    /**
      * Enable post thumbnail support.
      *
      * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
      */
     add_theme_support('post-thumbnails');
-
-    /**
-     * Enable responsive embed support.
-     *
-     * @link https://wordpress.org/gutenberg/handbook/designers-developers/developers/themes/theme-support/#responsive-embedded-content
-     */
-    add_theme_support('responsive-embeds');
 
     /**
      * Enable HTML5 markup support.

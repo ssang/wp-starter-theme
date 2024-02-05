@@ -25,7 +25,7 @@
   "require": {
     "php": "^8.0",
     "kucrut/vite-for-wp": "^0.8.0",
-    "log1x/acf-composer": "^2.1.0",
+    "log1x/acf-composer": "dev-master",
     "roots/acorn": "^4.0.1"
   },
   "require-dev": {

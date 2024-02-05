@@ -7,10 +7,19 @@
 namespace App;
 
 /**
- * Add "… Continued" to the excerpt.
- *
- * @return string
+ * Find and import all filter files
  */
-add_filter('excerpt_more', function () {
-    return sprintf(' &hellip; <a href="%s">%s</a>', get_permalink(), __('Continued', 'sage'));
-});
+
+ if (! file_exists($path = __DIR__ . '/filters')) {
+    return;
+}
+
+$filters = new \FilesystemIterator($path);
+
+foreach ($filters as $filter) {
+    if ($filter->isFile()) {
+        require_once($filter->getRealPath());
+    }
+}
+
+add_filter('run_wptexturize', '__return_false', 9999);

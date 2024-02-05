@@ -1,3 +1,3 @@
-<footer class="content-info">
-  @php(dynamic_sidebar('sidebar-footer'))
-</footer>
+<div id="site-footer" class="content-info">
+    
+</div>
