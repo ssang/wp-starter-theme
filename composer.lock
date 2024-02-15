@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a40545b9de1906d7a7134756157aa37c",
+    "content-hash": "e616931f2b8fcff2fe1475e2b3f8f730",
     "packages": [
         {
             "name": "brick/math",
@@ -3113,16 +3113,16 @@
         },
         {
             "name": "roots/acorn",
-            "version": "v4.0.1",
+            "version": "dev-fse",
             "source": {
                 "type": "git",
-                "url": "https://github.com/roots/acorn.git",
-                "reference": "b88eba12741bbd78b101b62c58225f4100b6ee3b"
+                "url": "https://github.com/dsturm/acorn.git",
+                "reference": "210cd43439532ea46fd6584d6d89c70c729643fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roots/acorn/zipball/b88eba12741bbd78b101b62c58225f4100b6ee3b",
-                "reference": "b88eba12741bbd78b101b62c58225f4100b6ee3b",
+                "url": "https://api.github.com/repos/dsturm/acorn/zipball/210cd43439532ea46fd6584d6d89c70c729643fb",
+                "reference": "210cd43439532ea46fd6584d6d89c70c729643fb",
                 "shasum": ""
             },
             "require": {
@@ -3175,16 +3175,34 @@
             ],
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/Roots/helpers.php",
-                    "src/Roots/globals.php"
-                ],
                 "psr-4": {
                     "Roots\\": "src/Roots/",
                     "Illuminate\\": "src/Illuminate/"
+                },
+                "files": [
+                    "src/Roots/helpers.php",
+                    "src/Roots/globals.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Roots\\Acorn\\Tests\\": "tests"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "lint": [
+                    "pint --test"
+                ],
+                "lint:fix": [
+                    "pint"
+                ],
+                "test": [
+                    "pest"
+                ],
+                "coverage": [
+                    "XDEBUG_MODE=coverage pest --coverage --coverage-html=coverage"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -3207,17 +3225,11 @@
                 "wordpress"
             ],
             "support": {
-                "forum": "https://discourse.roots.io/",
                 "issues": "https://github.com/roots/acorn/issues",
-                "source": "https://github.com/roots/acorn/tree/v4.0.1"
+                "forum": "https://discourse.roots.io/",
+                "source": "https://github.com/dsturm/acorn/tree/fse"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/roots",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-02-01T22:54:10+00:00"
+            "time": "2024-02-12T12:23:33+00:00"
         },
         {
             "name": "roots/support",
@@ -5476,7 +5488,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "log1x/acf-composer": 20
+        "log1x/acf-composer": 20,
+        "roots/acorn": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -1,7 +1,7 @@
-const plugin = require('tailwindcss/plugin')
-let config = require('./tailwind.config');
+module.exports = {
+  important: ':is(.block-editor-block-inspector, .is-root-container)',
 
-config.important = '.editor-styles-wrapper';
-
-/** @type {import('tailwindcss').Config} */
-module.exports = config
+  presets: [
+    require('./tailwind.config.js')
+  ]
+}

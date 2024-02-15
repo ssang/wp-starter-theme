@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "crew/site-header",
+	"version": "0.1.0",
+	"title": "Site Header",
+	"category": "custom",
+	"description": "Header",
+	"supports": {
+		"html": false,
+    "multiple": false
+	},
+  "attributes":{
+    "logo": {
+      "type": "object",
+      "default": {
+        "id": null,
+        "url": null
+      }
+    }
+  },
+  "parent": [],
+	"textdomain": "crew",
+	"editorScript": "file:./index.js"
+}

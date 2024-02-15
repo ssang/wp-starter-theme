@@ -3,3 +3,104 @@
 @import 'tailwindcss/utilities';
 
 @config "../../tailwind.editor.config.js";
+
+.interface-interface-skeleton__body {
+    &:has(.is-root-container > .is-selected) .block-editor-block-list__block-popover.is-positioned {
+        margin-left: 6rem !important;
+    }
+
+    &:has(.wp-block-crew-button.modal-open) .block-editor-block-list__block-popover.is-positioned {
+        z-index: 100 !important
+    }
+}
+
+.editor-styles-wrapper {
+    --bg-color: theme('colors.yellow.100');
+    --primary-color: theme('colors.blue.700');
+    --secondary-color: theme('colors.blue.500');
+    --title-font: theme('fontFamily.heading');
+    --body-font: theme('fontFamily.body');
+
+    overflow-x: clip;
+    font-family: var(--body-font);;
+    background-color: var(--bg-color);
+
+    .edit-post-visual-editor__post-title-wrapper {
+        padding-inline: 2rem;
+        margin-bottom: 2rem;
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 50px;
+            font-family: var(--title-font);
+            font-weight: 700;
+            text-align: center;
+        }
+    }
+
+    .rich-text [data-rich-text-placeholder]::after {
+        font-family: var(--body-font);;
+    }
+
+    :where(.wp-block :not(.prose *)) {
+        :is(a):not(.not-disabled) {
+            pointer-events: none;
+        }
+
+        &:where(h1, h2, h3, h4, h5, h6, p) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+
+    
+    .is-root-container {
+        gap: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        color: var(--primary-color);
+
+        > p.wp-block-paragraph {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        > .block-list-appender {
+            padding-left: 1rem;
+            padding-right: 1rem;
+    
+            .block-editor-default-block-appender__content {
+                display: none;
+            }
+
+            .block-editor-inserter {
+                width: 100%;
+                position: static;
+
+                .block-editor-inserter__toggle {
+                    @apply transition-colors;
+                    
+                    width: 100%;
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                    color: var(--primary-color);
+                    box-shadow:  0 0 0 2px var(--primary-color);
+                    background-color: #FFF;
+        
+                    :is(svg) {
+                        width: 2rem;
+                        height: 2rem;
+                    }
+        
+                    &:hover {
+                        color: var(--secondary-color);
+                        background-color: var(--primary-color);
+                    }
+                }
+            }
+        }
+    }
+}

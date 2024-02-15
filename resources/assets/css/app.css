@@ -2,7 +2,18 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import './typography/_fonts' layer(base);
+@import './components/_components' layer(components);
+@import './gutenberg/_core-blocks' layer(base);
+@import './vendors/_vendors.css';
+
 @layer base {
+    :root {
+        @screen xl {
+            font-size: clamp(100%, 1.05vw, 112.5%);
+        }
+    }
+
     [x-cloak] {
         display: none;
     }

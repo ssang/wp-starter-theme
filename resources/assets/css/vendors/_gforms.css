@@ -1,0 +1,87 @@
+.gform_wrapper {
+    .gform_validation_errors {
+        .gform_submission_error {
+            margin-bottom: 0.5rem;
+            font-size: theme('fontSize.sm');
+            
+            &.hide_summary {
+                @apply sr-only;
+            }
+        }
+    }
+
+    .gform_required_legend {
+        @apply sr-only;
+    }
+
+    .gform_fields {
+        --field-spacing: 1.5rem;
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem var(--field-spacing);
+
+        @screen xl {
+            gap: 1.5rem var(--field-spacing);
+        }
+
+        .gfield {
+            --field-width: 100%;
+
+            flex: 1 0 var(--field-width);
+            min-width: 16rem;
+
+            &.gfield_visibility_hidden {
+                display: none;
+            }
+
+            .ginput_container--name {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem var(--field-spacing);
+
+                &.gf_name_has_2 {
+                    --field-width: calc(50% - var(--field-spacing));
+                }
+
+                .gform-grid-col {
+                    &.gform-grid-col--size-auto {
+                        flex: 1 0 var(--field-width);
+                    }
+                }
+            }
+
+            :is(
+                input:not([type="submit"])
+             ) {
+                width: 100%;
+            }
+            
+            &.hidden_label {
+                .gfield_label {
+                    @apply sr-only;
+                }
+            }
+
+            &.gfield--width-half {
+                --field-width: calc(50% - var(--field-spacing));
+            }
+
+            
+
+            &.gfield--type-honeypot {
+                @apply sr-only;
+            }
+        }
+    }
+
+    .gfield_description {
+        margin-top: 0.5rem;
+        font-size: theme('fontSize.xs');
+        font-weight: theme('fontWeight.normal');
+
+        &.validation_message {
+            color: theme('colors.blue.DEFAULT');
+        }
+    }
+}

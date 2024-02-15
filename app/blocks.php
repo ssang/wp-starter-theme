@@ -2,20 +2,55 @@
 
 namespace App;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 
-add_filter('allowed_block_types_all', function ($allowed_blocks, $editor_context) {
-    return [
-        'crew/hero',
-        // 'core/paragraph',
-        // 'core/button',
-        // 'core/buttons',
-        // 'core/heading',
-        // 'core/quote',
-        // 'core/list',
-        // 'core/list-item'
-    ];
+/**
+ * Determine what blocks are available in the picker
+ */
+add_filter('allowed_block_types_all', function ($allowedBlocks, $editorContext) {
+    $blockTypes = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+    $allowedBlocks = collect(array_keys(Arr::where($blockTypes, function ($block, $name) {
+        return Str::before($name, '/') == 'crew';
+    })));
+
+    $postType = $editorContext->post->post_type ?? null;
+    $postTypes = $allowedBlocks->filter(function ($value) {
+        return Str::endsWith($value, '-meta');
+    });
+
+    foreach ($postTypes as $type) {
+        if ($postType === Str::between($type, 'crew/', '-meta')) {
+            return [$type];
+        }
+
+        $allowedBlocks->forget($allowedBlocks->search($type));
+    }
+
+    if ($postType === 'post') {
+        $allowedBlocks = collect([
+            'crew/content',
+            'crew/post-header',
+            'core/embed'
+        ]);
+    }
+
+    if ($editorContext->name == 'core/edit-site') {
+        $allowedBlocks->add('core/post-content');
+        $allowedBlocks->add('core/navigation');
+        $allowedBlocks->add('core/navigation-link');
+    }
+    
+    return array_merge($allowedBlocks->all(), [
+        'core/paragraph',
+        'core/heading',
+        'core/quote',
+        'core/list',
+        'core/list-item',
+        'core/block'
+    ]);
 }, 25, 2);
 
 /**
