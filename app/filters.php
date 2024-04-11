@@ -23,3 +23,5 @@ foreach ($filters as $filter) {
 }
 
 add_filter('run_wptexturize', '__return_false', 9999);
+
+add_filter('gform_disable_css', '__return_true');

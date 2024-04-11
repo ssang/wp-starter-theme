@@ -1,9 +1,12 @@
-<{{ $tag }}
+<{{ $attributes->hasAny(['href', ':href']) ? 'a' : 'button' }}
     {{ $attributes->class([
-        'inline-block px-[2em] pt-[1.1em] pb-[0.8em] uppercase bg-[--bg] font-venice text-[--text] tracking-[0.16rem] leading-none border border-yellow-light rounded-full transition-colors',
-        'hover:bg-yellow-light hover:text-blue hover:border-[--bg]'
+        'inline-flex items-center justify-center transition-colors no-underline whitespace-nowrap uppercase',
+    ])->merge([
+        'style' => Arr::toCssStyles([
+            '--bg-color: ' . $bg,
+            '--text-color: ' . $text,
+        ])
     ]) }}
-    style="{{ $styles }}"
 >
     {{ $slot }}
-</{{ $tag }}>
+</{{ $attributes->hasAny(['href', ':href']) ? 'a' : 'button' }}>

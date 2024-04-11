@@ -50,18 +50,18 @@ add_action('enqueue_block_assets', function (): void {
             'resources/assets/js/editor.js',
             [
                 'handle' => 'crew-editor',
-                'in-footer' => true,
+                'in-footer' => false,
                 'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
             ]
         );
+
+        wp_localize_script('crew-editor', 'wpApiSettings', [
+            'root' => esc_url_raw(rest_url()),
+            'nonce' => wp_create_nonce('wp_rest')
+        ]);
     }
 
     wp_enqueue_style('dashicons');
-
-    wp_localize_script('crew-editor', 'wpApiSettings', [
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
-    ]);
 });
 
 /**
@@ -115,5 +115,15 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/themes/advanced-topics/customizer-api/#theme-support-in-sidebars
      */
     add_theme_support('customize-selective-refresh-widgets');
+
+    /**
+     * Enable plugins to manage the document title.
+     *
+     * @link https://developer.wordpress.org/reference/functions/add_theme_support/#title-tag
+     */
+    add_theme_support('title-tag');
 }, 20);
 
+add_action('admin_menu', function () {
+    remove_submenu_page('themes.php', 'nav-menus.php');
+});

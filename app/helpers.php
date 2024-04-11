@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 if (! function_exists('vite')) {
     function vite($source)
@@ -126,5 +127,24 @@ if (! function_exists('posts_url')) {
         }
 
         return $url;
+    }
+}
+
+/**
+ * Converts WP style attribute to CSS Variable
+ */
+if (! function_exists('toCssVariable')) {
+    function toCssVariable($string = '') {
+        $string = Str::of($string);
+
+        if (! $string->contains('var:')) {
+            return $string;
+        }
+        
+        return Str::of($string)
+            ->start('var(')
+            ->replace('var:', '--wp--')
+            ->replace('|', '--')
+            ->finish(')');
     }
 }

@@ -1,9 +1,7 @@
-@part('header')
+@blockpart('header')
 
-<main class="relative z-10">
-    @parseblocks
-    <!-- wp:crew/example-block /-->
-    @endparseblocks
+<main class="container relative z-10">
+    @php(the_content())
 </main>
 
-@part('footer')
+@blockpart('footer')

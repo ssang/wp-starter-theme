@@ -1,11 +1,10 @@
-@props([
-    'bg' => '#fffdec'
-])
 <section
-    {{ $attributes->class([
-        'container bg-[--bg] py-24 group/block group-[]/block:py-0'
-    ]) }}
-    style="--bg: {{ $bg }}"
+    {{ 
+        $attributes->class([])
+            ->merge([
+                'style' => isset($block) ? $block->style : ''
+            ]) 
+    }}
 >
     {!! $slot !!}
 </section>

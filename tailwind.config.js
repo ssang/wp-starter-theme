@@ -10,12 +10,16 @@ module.exports = {
     "!./resources/blocks/*.js",
     "./config/acf.php"
   ],
+  corePlugins: {
+    container: false
+  },
   theme: {
     extend: {
       colors: {}, // Extend Tailwind's default colors
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     plugin(require('./tw-forms.config.js')),
     plugin(function({ addVariant }) {
       addVariant('menu', [

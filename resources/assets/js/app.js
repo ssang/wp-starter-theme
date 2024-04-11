@@ -1,8 +1,12 @@
-import './_bootstrap'
-import './_fonts'
+// import './_fonts'
 
-import './alpine'
+// import Swiper from 'swiper/bundle'
+import Alpine from "./alpine"
 
+// import 'swiper/css'
 import '../css/app.css'
- 
-window.Alpine.start()
+
+// window.Swiper = Swiper
+window.Alpine = Alpine
+
+Alpine.start()

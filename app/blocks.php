@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Block;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
@@ -41,6 +42,7 @@ add_filter('allowed_block_types_all', function ($allowedBlocks, $editorContext) 
         $allowedBlocks->add('core/post-content');
         $allowedBlocks->add('core/navigation');
         $allowedBlocks->add('core/navigation-link');
+        $allowedBlocks->add('core/navigation-submenu');
     }
     
     return array_merge($allowedBlocks->all(), [
@@ -91,17 +93,24 @@ add_action('init', function () {
 
     $blocks = new \FilesystemIterator($path);
 
+    crew_register_all_blocks($blocks);
+});
+
+function crew_register_all_blocks($blocks)
+{
     foreach ($blocks as $dir) {
         if (! file_exists($dir->getPathname() . '/block.json')) {
             continue;
         }
+
+        crew_register_all_blocks(new \FilesystemIterator($dir->getPathname()));
 
         $block = register_block_type(
             $dir->getPathname(),
             [
                 'render_callback' => function ($attributes, $content, $block) {
                     if ($block->block_type->category == 'meta') {
-                        return "";
+                        return '';
                     }
                     
                     $blockName = Str::after($block->name, '/');
@@ -122,6 +131,8 @@ add_action('init', function () {
                             );
                         }
 
+                        $block = new Block($block);
+
                         return View::first([
                             'blocks.partials.' . $blockName,
                             'blocks.' . $blockName
@@ -133,7 +144,7 @@ add_action('init', function () {
             ]
         );
     }
-});
+}
 
 /**
  * Find and import all block meta files

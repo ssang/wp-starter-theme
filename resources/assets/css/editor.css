@@ -2,7 +2,15 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@config "../../tailwind.editor.config.js";
+@import './typography/_fonts' layer(base);
+@import './components/_components' layer(components);
+@import './gutenberg/_core-blocks' layer(base);
+
+@config "../../../tailwind.editor.config.js";
+
+.components-resizable-box__container {
+    min-height: 75vh;
+}
 
 .interface-interface-skeleton__body {
     &:has(.is-root-container > .is-selected) .block-editor-block-list__block-popover.is-positioned {
@@ -15,9 +23,9 @@
 }
 
 .editor-styles-wrapper {
-    --bg-color: theme('colors.yellow.100');
-    --primary-color: theme('colors.blue.700');
-    --secondary-color: theme('colors.blue.500');
+    --bg-color: theme('colors.white');
+    --primary-color: theme('colors.black');
+    --secondary-color: theme('colors.red');
     --title-font: theme('fontFamily.heading');
     --body-font: theme('fontFamily.body');
 

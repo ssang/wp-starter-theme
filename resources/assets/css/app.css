@@ -8,12 +8,6 @@
 @import './vendors/_vendors.css';
 
 @layer base {
-    :root {
-        @screen xl {
-            font-size: clamp(100%, 1.05vw, 112.5%);
-        }
-    }
-
     [x-cloak] {
         display: none;
     }

@@ -1,8 +1,8 @@
 .container {
-    --gutter: clamp(1rem, 6vw, 4rem);
+    --gutter: clamp(2.5rem, 6vw, 6.25rem);
     --full: minmax(var(--gutter), 1fr);
-    --content: min(90rem, 100% - var(--gutter) * 2);
-    --wide: minmax(0, 6rem);
+    --content: min(60rem, 100% - var(--gutter) * 2);
+    --wide: minmax(0, 8.75rem);
 
     display: grid;
     grid-template-columns:
@@ -26,6 +26,10 @@
 
     &.container-wide > * {
         grid-column: wide;
+    }
+
+    &.container-full > * {
+        grid-column: full;
     }
 
     .container {
