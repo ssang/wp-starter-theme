@@ -37,6 +37,7 @@ use Illuminate\Support\Arr;
             if (block_has_support($block_type, ['image', 'imageSize'], false)) {
                 Arr::add($block_type->attributes, 'image.default.imageSize', 'cover');
                 Arr::add($block_type->attributes, 'image.default.imagePosition', '50% 50%');
+                Arr::add($block_type->attributes, 'image.default.imageWidth', 300);
             }
         },
     ]
@@ -63,6 +64,7 @@ add_filter('render_block_data', function ($block) {
     if (block_has_support($blockType, ['image', 'imageSize'], false)) {
         $blockAttributes = Arr::add($blockAttributes, 'image.imageSize', 'cover');
         $blockAttributes = Arr::add($blockAttributes, 'image.imagePosition', '50% 50%');
+        $blockAttributes = Arr::add($blockAttributes, 'image.imageWidth', 300);
     }
 
     $block['attrs'] = $blockAttributes;

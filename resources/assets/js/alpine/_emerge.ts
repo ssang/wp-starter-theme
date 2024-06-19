@@ -6,12 +6,22 @@ gsap.registerPlugin(ScrollTrigger)
 export default function (Alpine) {
   Alpine.directive(
     "emerge",
-    (el, { value, expression, modifiers }, { evaluate, cleanup }) => {
+    async (el, { value, expression, modifiers }, { evaluate, cleanup }) => {
       let options = evaluate(expression.length > 0 ? expression : "{}")
 
-      if (modifiers.includes("scrub")) {
-        doScrubbedAnimation(el, modifiers, options)
+      setUpElementStorageMap(el, value, modifiers, options)
 
+      await ScrollTrigger.getAll().forEach(t => {
+        if (t.trigger === el) {
+          console.log(el)
+
+          t.kill()
+        }
+      })
+
+      if (el._x_emerge.scrub) {
+        doScrubbedAnimation(el, modifiers, options)
+        
         return
       }
 
@@ -26,6 +36,8 @@ export default function (Alpine) {
             'delay',
             300
           )
+
+          gsap.killTweensOf(child)
 
           doAutoAnimation(child, el, modifiers, options, delay * count)
 
@@ -49,31 +61,70 @@ export default function (Alpine) {
   )
 }
 
-function doScrubbedAnimation(el, modifiers, options) {
-    if (options.hasOwnProperty("z")) {
-        gsap.set(el, { transformPerspective: 500 })
+function setUpElementStorageMap(el, value, modifiers, options) {
+  if (! el._x_emerge) {
+    el._x_emerge = {
+      from: {},
+      to: {},
+      start: 'top bottom',
+      end: 'top center',
+      scrub: false,
+      debug: false
     }
+  }
 
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: el,
-            scrub: modifierValue(modifiers, "scrub", true),
-            start: `${modifierValue(modifiers, "start", "top")} ${modifierValue(
-                modifiers,
-                "start",
-                "bottom",
-                2,
-            )}`,
-            end: `${modifierValue(modifiers, "end", "top")} ${modifierValue(
-                modifiers,
-                "end",
-                "50%",
-                2,
-            )}`,
-        },
-    })
+  if (modifiers.includes("debug")) {
+    el._x_emerge.debug = true
+  }
+  
+  if (modifiers.includes("scrub")) {
+    el._x_emerge.scrub = true
+  }
 
-    tl.from(el, options)
+  if (value == 'from') {
+    el._x_emerge.from = options
+  }
+
+  if (value == 'to') {
+    el._x_emerge.to = options
+  }
+
+  if (modifiers.includes('start')) {
+    el._x_emerge.start = `${modifierValue(modifiers, "start", "top")} ${modifierValue(modifiers, "start", "bottom", 2)}`
+  }
+
+  if (modifiers.includes('end')) {
+    el._x_emerge.end = `${modifierValue(modifiers, "end", "top")} ${modifierValue(modifiers, "end", "center", 2)}`
+  }
+}
+
+function doScrubbedAnimation(el, modifiers, options) {
+  if (options.hasOwnProperty("z")) {
+      gsap.set(el, { transformPerspective: 500 })
+  }
+
+  // const tl = gsap.timeline({
+  //     scrollTrigger: {
+  //         trigger: el,
+  //         scrub: modifierValue(modifiers, "scrub", true),
+  //         start: el._x_emerge.start,
+  //         end: el._x_emerge.end,
+  //     },
+  // })
+
+  gsap.fromTo(
+    el, 
+    el._x_emerge.from,
+    {
+      scrollTrigger: {
+          trigger: el,
+          scrub: modifierValue(modifiers, "scrub", true),
+          start: el._x_emerge.start,
+          end: el._x_emerge.end,
+      },
+      ...el._x_emerge.to 
+    }
+  )
 }
 
 function doAutoAnimation(el, trigger, modifiers, options, delay = 0) {
@@ -88,6 +139,8 @@ function doAutoAnimation(el, trigger, modifiers, options, delay = 0) {
     }
 
     defaultOptions.delay = Number(modifierValue(modifiers, 'delay', delay)) / 1000
+    
+    defaultOptions.duration = Number(modifierValue(modifiers, 'duration', 500)) / 1000
 
     const animation = gsap.from(el, {
       ...defaultOptions,

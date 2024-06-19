@@ -2,9 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import './typography/_fonts' layer(base);
-@import './components/_components' layer(components);
-@import './gutenberg/_core-blocks' layer(base);
+@import './components/_components';
+@import './gutenberg/_core-blocks';
 
 @config "../../../tailwind.editor.config.js";
 
@@ -25,9 +24,9 @@
 .editor-styles-wrapper {
     --bg-color: theme('colors.white');
     --primary-color: theme('colors.black');
-    --secondary-color: theme('colors.red');
-    --title-font: theme('fontFamily.heading');
-    --body-font: theme('fontFamily.body');
+    --secondary-color: theme('colors.red.500');
+    --title-font: theme('fontFamily.serif');
+    --body-font: theme('fontFamily.sans');
 
     overflow-x: clip;
     font-family: var(--body-font);;

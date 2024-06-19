@@ -11,12 +11,16 @@ class Image extends Component
 {
     public array $style = [];
 
+    public string $src = '';
+
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public array $image,
-        public string $size = 'full'
+        public array $image = [],
+        public string $size = 'full',
+        protected int $id = 0,
+        $src = ''
     ){
         if (Arr::has($image, 'imageSize')) {
             $this->style[] = 'object-fit: ' . $image['imageSize'];
@@ -24,6 +28,12 @@ class Image extends Component
 
         if (Arr::has($image, 'imagePosition')) {
             $this->style[] = 'object-position: ' . $image['imagePosition'];
+        }
+
+        $this->src = $src;
+
+        if (! empty($attachment = wp_get_attachment_image_src($image['id'] ?? 0, $size))) {
+            $this->src = $attachment[0];
         }
     }
 

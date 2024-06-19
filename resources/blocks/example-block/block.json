@@ -1,18 +1,17 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "crew/example-block",
-	"version": "0.1.0",
-	"title": "Example Block",
-	"category": "custom",
-	"icon": "button",
-	"description": "",
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "crew/example-block",
+  "version": "0.1.0",
+  "title": "Example Block",
+  "category": "custom",
+  "icon": "button",
+  "description": "",
   "keywords": [],
-	"supports": {
-		"html": false
-	},
-  "attributes": {
+  "supports": {
+    "html": false
   },
-	"textdomain": "crew",
-	"editorScript": "file:./index.js"
+  "attributes": {},
+  "textdomain": "crew",
+  "editorScript": "file:./index.js"
 }

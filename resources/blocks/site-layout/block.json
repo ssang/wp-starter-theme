@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "crew/site-layout",
+	"version": "0.1.0",
+	"title": "Site Layout",
+	"category": "custom",
+	"description": "Site Layout",
+	"supports": {
+		"html": false
+	},
+  "attributes":{
+	},
+  "usesContext": ["postType", "postId"],
+  "parent": ["root"],
+	"textdomain": "crew",
+	"editorScript": "file:./index.js"
+}

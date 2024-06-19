@@ -24,6 +24,7 @@ export default function Button({
   className,
   onChange,
   onClick = () => {},
+  onClose = () => {},
   onLinkChange = false,
   onLinkRemove = () => {},
   showLinkBox = false,
@@ -59,6 +60,7 @@ export default function Button({
             url: link.url,
             opensInNewTab: link.opensInNewTab ?? false
           }}
+          onClose={ onClose }
           onChange={ onLinkChange }
           onRemove={ onLinkRemove }
           anchor={ buttonRef }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 trait ExtendsWP
@@ -34,5 +35,34 @@ trait ExtendsWP
         if (method_exists($this->base, $method)) {
             return $this->base->{$method}(...$arguments);
         }
+    }
+
+    public function getMeta($key, $single = true)
+    {
+        return get_post_meta($this->ID, $key, $single);
+    }
+
+    protected function getPublishedAt()
+    {
+        return Carbon::parse($this->base->post_date);
+    }
+
+    protected function getTitle()
+    {
+        return $this->base->post_title;
+    }
+
+
+    protected function getPermalink()
+    {
+        return get_permalink($this->base);
+    }
+
+    protected function getFeaturedImage()
+    {
+        return [
+            'url' => get_the_post_thumbnail_url($this->base->ID, 'full'),
+            'id' => get_post_thumbnail_id($this->base->ID)
+        ];
     }
 }

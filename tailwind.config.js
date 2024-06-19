@@ -26,9 +26,15 @@ module.exports = {
         '& .wp-block-navigation__container',
         '& .wp-block-navigation > ul'
       ])
-      addVariant('menu-item', '& > .wp-block-navigation > ul > .wp-block-navigation-link')
+      addVariant('submenu', [
+        '& .wp-block-navigation-submenu'
+      ])
+      addVariant('submenu', [
+        '& .wp-block-navigation-submenu'
+      ])
+      addVariant('menu-item', '& li.wp-block-navigation-link')
       addVariant('menu-link', [
-        '& > .wp-block-navigation > ul > .wp-block-navigation-link > a',
+        '& .wp-block-navigation-link > a',
         '& .wp-block-navigation-item__content > div'
       ])
     }),

@@ -1,38 +1,40 @@
-.container {
-    --gutter: clamp(2.5rem, 6vw, 6.25rem);
-    --full: minmax(var(--gutter), 1fr);
-    --content: min(60rem, 100% - var(--gutter) * 2);
-    --wide: minmax(0, 8.75rem);
+@layer components {
+    .container {
+        --gutter: clamp(2.5rem, 6vw, 6.25rem);
+        --full: minmax(var(--gutter), 1fr);
+        --content: min(60rem, 100% - var(--gutter) * 2);
+        --wide: minmax(0, 8.75rem);
 
-    display: grid;
-    grid-template-columns:
-        [full-start] var(--full)
-            [wide-start] var(--wide)
-                [content-start] var(--content) [content-end]
-            var(--wide) [wide-end]     
-        var(--full) [full-end];
+        display: grid;
+        grid-template-columns:
+            [full-start] var(--full)
+                [wide-start] var(--wide)
+                    [content-start] var(--content) [content-end]
+                var(--wide) [wide-end]     
+            var(--full) [full-end];
 
-    & > * {
-        grid-column: content;
+        & > * {
+            grid-column: content;
 
-        &.content-wide {
+            &.content-wide {
+                grid-column: wide;
+            }
+
+            &.content-full {
+                grid-column: full;
+            }
+        }
+
+        &.container-wide > * {
             grid-column: wide;
         }
 
-        &.content-full {
+        &.container-full > * {
             grid-column: full;
         }
-    }
 
-    &.container-wide > * {
-        grid-column: wide;
-    }
-
-    &.container-full > * {
-        grid-column: full;
-    }
-
-    .container {
-        display: block;
+        .container {
+            display: block;
+        }
     }
 }

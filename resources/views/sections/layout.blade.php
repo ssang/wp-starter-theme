@@ -2,6 +2,7 @@
 
 @section('content')
     <main class="container relative z-10">
-        @php(the_content())
+        @blocks(get_the_content(null, false, get_queried_object()))
+        {!! $content !!}
     </main>
 @endsection

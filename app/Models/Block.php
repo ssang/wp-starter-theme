@@ -16,6 +16,16 @@ class Block
         $this->base = $block;
     }
 
+    public function getClassName()
+    {
+        return Arr::get($this->attributes, 'className', '');
+    }
+
+    public function isStyle($style)
+    {
+        return Str::contains($this->class_name, 'is-style-' . $style);
+    }
+
     public function getStyle()
     {
         $styles = [];
@@ -23,6 +33,8 @@ class Block
         if (Arr::has($this->attributes, 'style.spacing.padding')) {
             $styles[] = 'padding-top: ' . $this->getStyleAttribute('spacing.padding.top', true);
             $styles[] = 'padding-bottom: ' . $this->getStyleAttribute('spacing.padding.bottom', true);
+            $styles[] = 'padding-left: ' . $this->getStyleAttribute('spacing.padding.left', true);
+            $styles[] = 'padding-right: ' . $this->getStyleAttribute('spacing.padding.right', true);
         }
 
         if (Arr::has($this->attributes, 'textColor')) {
@@ -60,5 +72,10 @@ class Block
         }
         
         return toCssVariable($attribute->toString());
+    }
+
+    public function getAnchor()
+    {
+        return Arr::get($this->attributes, 'anchor', '');
     }
 }

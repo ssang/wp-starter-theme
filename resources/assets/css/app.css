@@ -2,10 +2,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import './typography/_fonts' layer(base);
-@import './components/_components' layer(components);
-@import './gutenberg/_core-blocks' layer(base);
-@import './vendors/_vendors.css';
+/* @import './typography/_fonts'; */
+/* @import './components/_components';
+@import './gutenberg/_core-blocks';
+@import './vendors/_vendors.css'; */
 
 @layer base {
     [x-cloak] {

@@ -81,7 +81,7 @@
         font-weight: theme('fontWeight.normal');
 
         &.validation_message {
-            color: theme('colors.blue.DEFAULT');
+            color: theme('colors.red.500');
         }
     }
 }

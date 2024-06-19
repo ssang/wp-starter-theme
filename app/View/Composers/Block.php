@@ -13,7 +13,8 @@ class Block extends Composer
      */
     protected static $views = [
         'blocks/*',
-        'sections/*'
+        'sections/*',
+        'content/*'
     ];
 
     /**

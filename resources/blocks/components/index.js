@@ -1,7 +1,5 @@
 export { default as Block } from './Block'
 export { default as Button } from './Button'
-export { default as Prose } from './Prose'
-export { default as SettingsLabel } from './SettingsLabel'
 export { default as PlaceholderImage } from './PlaceholderImage'
 
 export const Content_Blocks = [

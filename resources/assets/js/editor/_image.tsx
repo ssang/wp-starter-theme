@@ -3,6 +3,7 @@ const { MediaUpload, InspectorControls } = wp.blockEditor
 const {
   Button,
   PanelBody,
+  BaseControl,
   ButtonGroup,
 	FocalPointPicker,
   __experimentalVStack: VStack,
@@ -155,6 +156,13 @@ function ImageSettingsPanel (props) {
       _image['imagePosition'] = '50% 50%'
     }
 
+    if (getBlockSupport(props.name, ['image', 'mobile'])) {
+      _image['mobile'] = {
+        url: null,
+        id: null
+      }
+    }
+
     setAttributes({
       image: _image
     })
@@ -173,6 +181,7 @@ function ImageSettingsPanel (props) {
           image={ image }
           onChange={ media => {
             const _image = {
+              ...image,
               id: media.id,
               url: media.url
             }
@@ -193,6 +202,60 @@ function ImageSettingsPanel (props) {
         ) }
         { getBlockSupport(props.name, ['image', 'imageSize']) && (
           <ImageSizingSettings { ...props } />
+        ) }
+        { getBlockSupport(props.name, ['image', 'mobile']) && (
+          <ToolsPanelItem
+            hasValue={ () => !! image.mobile?.url }
+            label="Mobile Image"
+            panelId="ImageSettings"
+            isShownByDefault={ false }
+          >
+            <BaseControl
+              label="Mobile Image"
+            >
+              <MediaUpload
+                onSelect={ media => {
+                  const _image = { ...image }
+
+                  _image['mobile'] = {
+                    url: media.url,
+                    id: media.id
+                  }
+
+                  setAttributes({
+                    image: _image
+                  })
+                } }
+                allowedTypes={ ['image'] }
+                value={ image.mobile?.id  }
+                render={({ open }) => (
+                  <VStack>
+                    { !! image.mobile?.url && <img className="block" src={ image.mobile?.url } /> }
+                    <div className="flex gap-2">
+                      <Button variant="primary" onClick={ open }>{ !! image.mobile?.url ? 'Replace Image' : 'Set Image'}</Button>
+                      { !! image.mobile?.url && (
+                        <Button 
+                          variant="secondary"
+                          onClick={ () => {
+                            const _image = { ...image }
+            
+                            _image['mobile'] = {
+                              url: null,
+                              id: null
+                            }
+            
+                            setAttributes({
+                              image: _image
+                            })
+                          } }
+                        >Reset Image</Button>
+                      ) }
+                    </div>
+                  </VStack>
+                )}
+              />
+            </BaseControl>
+          </ToolsPanelItem>
         ) }
       </VStack>
     </InspectorControls>

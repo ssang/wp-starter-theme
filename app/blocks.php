@@ -23,11 +23,9 @@ add_filter('allowed_block_types_all', function ($allowedBlocks, $editorContext) 
     });
 
     foreach ($postTypes as $type) {
-        if ($postType === Str::between($type, 'crew/', '-meta')) {
-            return [$type];
+        if ($postType !== Str::between($type, 'crew/', '-meta')) {
+            $allowedBlocks->forget($allowedBlocks->search($type));
         }
-
-        $allowedBlocks->forget($allowedBlocks->search($type));
     }
 
     if ($postType === 'post') {
@@ -109,10 +107,6 @@ function crew_register_all_blocks($blocks)
             $dir->getPathname(),
             [
                 'render_callback' => function ($attributes, $content, $block) {
-                    if ($block->block_type->category == 'meta') {
-                        return '';
-                    }
-                    
                     $blockName = Str::after($block->name, '/');
                     
                     try {
@@ -134,11 +128,14 @@ function crew_register_all_blocks($blocks)
                         $block = new Block($block);
 
                         return View::first([
+                            'content.' . Str::beforeLast($blockName, '-meta'),
                             'blocks.partials.' . $blockName,
                             'blocks.' . $blockName
                         ], compact('attributes', 'block', 'content'));
                     } catch (\Exception $e) {
-                        return 'View does not exist for ' . $blockName;
+                        if ($block->block_type->category != 'meta') {
+                            return '<span style="text-align: center; font-size: 4rem">View does not exist for ' . $blockName . '</span>';
+                        }
                     }
                 },
             ]

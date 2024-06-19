@@ -24,6 +24,21 @@ class App extends Composer
     {
         return [
             'siteName' => $this->siteName(),
+            'siteLogo' => $this->getSiteLogo()
+        ];
+    }
+    
+    public function getSiteLogo()
+    {
+        $siteLogo = get_theme_mod('custom_logo');
+        
+        if (empty($siteLogo)) {
+            return null;
+        }
+
+        return [
+            'id' => $siteLogo,
+            'url' => wp_get_attachment_image_src($siteLogo, 'full')[0]
         ];
     }
 

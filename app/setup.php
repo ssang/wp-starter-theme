@@ -7,35 +7,34 @@
 namespace App;
 
 use Kucrut\Vite;
+use Illuminate\Support\Facades\Blade;
 
-add_filter('vite_for_wp__production_assets', function ($assets, $manifest, $entry, $options) {
-    if (empty($manifest->data->{$entry}->imports)) return $assets;
+// add_filter('vite_for_wp__production_assets', function ($assets, $manifest, $entry, $options) {
+//     if (empty($manifest->data->{$entry}->imports)) return $assets;
 
-    foreach ($manifest->data->{$entry}->imports as $import) {
-        Vite\enqueue_asset(
-            get_stylesheet_directory() . '/dist',
-            $import,
-            [
-                'handle' => 'crew-app-imports',
-                'css-only' => true
-            ]
-        );
-    }
+//     foreach ($manifest->data->{$entry}->imports as $import) {
+//         Vite\enqueue_asset(
+//             get_stylesheet_directory() . '/dist',
+//             $import,
+//             [
+//                 'handle' => 'crew-app-imports',
+//                 'css-only' => true
+//             ]
+//         );
+//     }
 
-    return $assets;
+//     return $assets;
 
-}, 10, 4);
+// }, 10, 4);
 
 add_action('wp_enqueue_scripts', function (): void {
     Vite\enqueue_asset(
-        get_stylesheet_directory() . '/dist',
-        'resources/assets/js/app.js',
-        [
-            'css-media' => 'all',
-            'handle' => 'crew-app',
-            'in-footer' => true,
-        ]
-    );
+		get_stylesheet_directory() . '/dist',
+		'resources/assets/js/app.ts',
+		[
+			'handle' => 'crew-app',
+		]
+	);
 
     wp_localize_script('crew-app', 'wpApiSettings', [
         'root' => esc_url_raw(rest_url()),
@@ -43,23 +42,20 @@ add_action('wp_enqueue_scripts', function (): void {
     ]);
 });
 
-add_action('enqueue_block_assets', function (): void { 
-    if (is_admin()) {
-        Vite\enqueue_asset(
-            get_stylesheet_directory() . '/dist',
-            'resources/assets/js/editor.js',
-            [
-                'handle' => 'crew-editor',
-                'in-footer' => false,
-                'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
-            ]
-        );
+add_action('enqueue_block_assets', function (): void {
+    Vite\enqueue_asset(
+        get_stylesheet_directory() . '/dist',
+        'resources/assets/js/editor.ts',
+        [
+            'handle' => 'crew-editor',
+            'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
+        ]
+    );
 
-        wp_localize_script('crew-editor', 'wpApiSettings', [
-            'root' => esc_url_raw(rest_url()),
-            'nonce' => wp_create_nonce('wp_rest')
-        ]);
-    }
+    wp_localize_script('crew-editor', 'wpApiSettings', [
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ]);
 
     wp_enqueue_style('dashicons');
 });
@@ -70,16 +66,6 @@ add_action('enqueue_block_assets', function (): void {
  * @return void
  */
 add_action('after_setup_theme', function () {
-
-    /**
-     * Register the navigation menus.
-     *
-     * @link https://developer.wordpress.org/reference/functions/register_nav_menus/
-     */
-    register_nav_menus([
-        'primary_navigation' => __('Primary Navigation', 'sage'),
-    ]);
-
     /**
      * Disable the default block patterns.
      *
@@ -122,8 +108,21 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/reference/functions/add_theme_support/#title-tag
      */
     add_theme_support('title-tag');
+
+    add_theme_support('disable-layout-styles');
 }, 20);
 
 add_action('admin_menu', function () {
     remove_submenu_page('themes.php', 'nav-menus.php');
+});
+
+add_action('wp_head', function () {
+    echo view('sections.head')->render();
+});
+
+/**
+ * Livewire
+ */
+add_filter('wp_footer', function () {
+    echo Blade::render('@livewireScriptConfig');
 });
