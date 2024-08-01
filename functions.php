@@ -11,8 +11,13 @@
 |
 */
 
-if (! file_exists($composer = __DIR__.'/vendor/autoload.php')) {
-    wp_die(__('Error locating autoloader. Please run <code>composer install</code>.', 'sage'));
+if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+    wp_die(
+        __(
+            'Error locating autoloader. Please run <code>composer install</code>.',
+            'sage'
+        )
+    );
 }
 
 require $composer;
@@ -29,20 +34,24 @@ require $composer;
 |
 */
 
-if (! function_exists('\Roots\bootloader')) {
-    wp_die(
-        __('You need to install Acorn to use this theme.', 'sage'),
-        '',
-        [
-            'link_url' => 'https://roots.io/acorn/docs/installation/',
-            'link_text' => __('Acorn Docs: Installation', 'sage'),
-        ]
-    );
+if (!function_exists('\Roots\bootloader')) {
+    wp_die(__('You need to install Acorn to use this theme.', 'sage'), '', [
+        'link_url' => 'https://roots.io/acorn/docs/installation/',
+        'link_text' => __('Acorn Docs: Installation', 'sage'),
+    ]);
 }
 
 add_action('after_setup_theme', function () {
     \Roots\bootloader()->boot();
 });
+
+/**
+ * Start Laravel Session after WordPress loaded.
+ */
+add_action(
+    'wp_loaded',
+    fn() => app('session')->isStarted() || app('session')->start()
+);
 
 /*
 |--------------------------------------------------------------------------
@@ -56,12 +65,16 @@ add_action('after_setup_theme', function () {
 |
 */
 
-collect(['setup', 'blocks', 'filters', 'helpers'])
-    ->each(function ($file) {
-        if (! locate_template($file = "app/{$file}.php", true, true)) {
-            wp_die(
-                /* translators: %s is replaced with the relative file path */
-                sprintf(__('Error locating <code>%s</code> for inclusion.', 'sage'), $file)
-            );
-        }
-    });
+collect(['setup', 'cpts', 'blocks', 'filters', 'helpers'])->each(function (
+    $file
+) {
+    if (!locate_template($file = "app/{$file}.php", true, true)) {
+        wp_die(
+            /* translators: %s is replaced with the relative file path */
+            sprintf(
+                __('Error locating <code>%s</code> for inclusion.', 'sage'),
+                $file
+            )
+        );
+    }
+});

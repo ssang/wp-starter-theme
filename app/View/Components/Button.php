@@ -8,14 +8,12 @@ use Illuminate\View\Component;
 
 class Button extends Component
 {
-    public string $tag = 'a';
-
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public string $variant = 'default'
-    ){}
+    public function __construct(public string $variant = 'default')
+    {
+    }
 
     /**
      * Get the view / contents that represent the component.

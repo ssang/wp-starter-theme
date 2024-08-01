@@ -6,14 +6,27 @@ use WP_Block;
 use App\Models\ExtendsWP;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Livewire\Wireable;
 
-class Block
+class Block implements Wireable
 {
     use ExtendsWP;
 
     public function __construct(WP_Block $block)
     {
         $this->base = $block;
+    }
+
+    public function toLivewire()
+    {
+        return [
+            'content' => serialize_block($this->base->parsed_block),
+        ];
+    }
+
+    public static function fromLivewire($value)
+    {
+        return new Block(new WP_Block(parse_blocks($value['content'])[0]));
     }
 
     public function getClassName()
@@ -30,19 +43,33 @@ class Block
     {
         $styles = [];
 
+        if (Arr::has($this->attributes, 'style.spacing.margin')) {
+            $styles[] =
+                'margin-top: ' .
+                $this->getStyleAttribute('spacing.margin.top', true);
+            $styles[] =
+                'margin-bottom: ' .
+                $this->getStyleAttribute('spacing.margin.bottom', true);
+        }
+
         if (Arr::has($this->attributes, 'style.spacing.padding')) {
-            $styles[] = 'padding-top: ' . $this->getStyleAttribute('spacing.padding.top', true);
-            $styles[] = 'padding-bottom: ' . $this->getStyleAttribute('spacing.padding.bottom', true);
-            $styles[] = 'padding-left: ' . $this->getStyleAttribute('spacing.padding.left', true);
-            $styles[] = 'padding-right: ' . $this->getStyleAttribute('spacing.padding.right', true);
+            $styles[] =
+                'padding-top: ' .
+                $this->getStyleAttribute('spacing.padding.top', true);
+            $styles[] =
+                'padding-bottom: ' .
+                $this->getStyleAttribute('spacing.padding.bottom', true);
         }
 
         if (Arr::has($this->attributes, 'textColor')) {
-            $styles[] = '--text-color: ' . $this->getColorVariable('textColor', true);
+            $styles[] =
+                '--text-color: ' . $this->getColorVariable('textColor', true);
         }
 
         if (Arr::has($this->attributes, 'backgroundColor')) {
-            $styles[] = '--bg-color: ' . $this->getColorVariable('backgroundColor', true);
+            $styles[] =
+                '--bg-color: ' .
+                $this->getColorVariable('backgroundColor', true);
         }
 
         return Arr::toCssStyles($styles);
@@ -50,7 +77,7 @@ class Block
 
     public function getStyleAttribute($attribute, $css = false)
     {
-        if (! Arr::hasAny($this->attributes, ['style'])) {
+        if (!Arr::hasAny($this->attributes, ['style'])) {
             return '';
         }
 
@@ -66,11 +93,11 @@ class Block
     public function getColorVariable($key)
     {
         $attribute = Str::of(Arr::get($this->attributes, $key, ''));
-        
-        if (! $attribute->startsWith('var:preset|color|')) {
+
+        if (!$attribute->startsWith('var:preset|color|')) {
             $attribute = $attribute->start('var:preset|color|');
         }
-        
+
         return toCssVariable($attribute->toString());
     }
 

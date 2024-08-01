@@ -13,7 +13,7 @@ trait ExtendsWP
 
     public function __get($property)
     {
-        if (! $this->exists) {
+        if (!$this->exists) {
             return false;
         }
 
@@ -52,7 +52,6 @@ trait ExtendsWP
         return $this->base->post_title;
     }
 
-
     protected function getPermalink()
     {
         return get_permalink($this->base);
@@ -62,7 +61,7 @@ trait ExtendsWP
     {
         return [
             'url' => get_the_post_thumbnail_url($this->base->ID, 'full'),
-            'id' => get_post_thumbnail_id($this->base->ID)
+            'id' => get_post_thumbnail_id($this->base->ID),
         ];
     }
 }

@@ -1,42 +1,36 @@
-import { resolve } from 'node:path'
-import { v4wp } from '@kucrut/vite-for-wp'
-import { wp_scripts } from '@kucrut/vite-for-wp/plugins'
-import react from '@vitejs/plugin-react'
+import { v4wp } from '@kucrut/vite-for-wp';
+import { wp_scripts } from '@kucrut/vite-for-wp/plugins';
+import { resolve } from 'node:path';
 
 export default {
   plugins: [
     v4wp({
       input: {
-        app: './resources/assets/js/app.js',
-        editor: './resources/assets/js/editor.js'
+        app: './resources/assets/js/app.ts',
+        editor: './resources/assets/js/editor.ts'
       },
       outDir: 'dist'
     }),
-    wp_scripts(),
-		react({
-			jsxRuntime: 'classic',
-		}),
+    wp_scripts()
   ],
   server: {
     watch: {
-      ignored: ["**/vendor/**"],
+      ignored: ['**/vendor/**']
     }
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'resources'),
       '~': resolve(__dirname),
-      'tailwind.config.js': resolve(__dirname, 'tailwind.config.js'),
+      'tailwind.config.ts': resolve(__dirname, 'tailwind.config.ts')
     }
   },
   optimizeDeps: {
-    include: [
-      'tailwind.config.js',
-    ]
+    include: ['tailwind.config.jts']
   },
   build: {
     commonjsOptions: {
-      include: ['./tailwind.config.js', /node_modules/],
-    },
+      include: ['./tailwind.config.ts', /node_modules/]
+    }
   }
-}
+};

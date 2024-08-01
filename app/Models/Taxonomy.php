@@ -12,10 +12,18 @@ class Taxonomy
 
     public function __construct(WP_Term|int $category)
     {
-        $this->base = $category instanceof WP_Term ? $category : WP_Term::get_instance($category);
+        $this->base =
+            $category instanceof WP_Term
+                ? $category
+                : WP_Term::get_instance($category);
 
         if (is_bool($this->base)) {
             return $this->exists = false;
         }
+    }
+
+    protected function getPermalink()
+    {
+        return get_term_link($this->base);
     }
 }

@@ -13,6 +13,8 @@ class Image extends Component
 
     public string $src = '';
 
+    public string $srcset = '';
+
     /**
      * Create a new component instance.
      */
@@ -21,7 +23,7 @@ class Image extends Component
         public string $size = 'full',
         protected int $id = 0,
         $src = ''
-    ){
+    ) {
         if (Arr::has($image, 'imageSize')) {
             $this->style[] = 'object-fit: ' . $image['imageSize'];
         }
@@ -32,9 +34,18 @@ class Image extends Component
 
         $this->src = $src;
 
-        if (! empty($attachment = wp_get_attachment_image_src($image['id'] ?? 0, $size))) {
+        if (
+            !empty(
+                ($attachment = wp_get_attachment_image_src(
+                    $image['id'] ?? 0,
+                    $size
+                ))
+            )
+        ) {
             $this->src = $attachment[0];
         }
+
+        // $this->srcset = wp_get_attachment_image_srcset($image['id'] ?? 0, 'md');
     }
 
     /**

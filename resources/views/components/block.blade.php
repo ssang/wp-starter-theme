@@ -1,9 +1,13 @@
+@props([
+    'block',
+])
+
 <section
-    {{ 
-        $attributes->class([])
-            ->merge([
-                'style' => isset($block) ? $block->style : ''
-            ]) 
+    {{
+        $attributes->class(['group/block group-[]/block:py-0'])->merge([
+            'style' => $block->style ?? '',
+            'id' => $block->anchor ?? '',
+        ])
     }}
 >
     {!! $slot !!}

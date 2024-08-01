@@ -1,0 +1,36 @@
+{
+  "arrowParens": "always",
+  "printWidth": 80,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "semi": true,
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "plugins": [
+    "prettier-plugin-blade",
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindFunctions": ["_class", "@class"],
+  "overrides": [
+    {
+      "files": ["*.blade.php"],
+      "options": {
+        "parser": "blade",
+        "tabWidth": 4,
+        "trailingComma": "none"
+      }
+    },
+    {
+      "files": ["*.php"],
+      "excludeFiles": ["*.blade.php"],
+      "options": {
+        "parser": "php",
+        "plugins": ["@prettier/plugin-php"],
+        "tabWidth": 4,
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

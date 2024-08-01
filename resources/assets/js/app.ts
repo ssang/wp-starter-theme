@@ -1,5 +1,3 @@
-// import './_fonts'
+import './alpine';
 
-import './alpine'
-
-import '../css/app.css'
+import '../css/app.css';
