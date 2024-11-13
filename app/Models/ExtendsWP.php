@@ -60,7 +60,7 @@ trait ExtendsWP
     protected function getFeaturedImage()
     {
         return [
-            'url' => get_the_post_thumbnail_url($this->base->ID, 'full'),
+            'src' => get_the_post_thumbnail_url($this->base->ID, 'full'),
             'id' => get_post_thumbnail_id($this->base->ID),
         ];
     }

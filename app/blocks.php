@@ -10,53 +10,64 @@ use Illuminate\Support\Facades\View;
 /**
  * Determine what blocks are available in the picker
  */
-add_filter('allowed_block_types_all', function ($allowedBlocks, $editorContext) {
-    $blockTypes = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+add_filter(
+    'allowed_block_types_all',
+    function ($allowedBlocks, $editorContext) {
+        $blockTypes = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+        $postType = $editorContext->post->post_type ?? 'editor';
 
-    $allowedBlocks = collect(array_keys(Arr::where($blockTypes, function ($block, $name) {
-        return Str::before($name, '/') == 'crew';
-    })));
+        $allowedBlocks = collect(
+            array_keys(
+                Arr::where($blockTypes, function ($block, $name) use (
+                    $postType
+                ) {
+                    if (Str::before($name, '/') != 'crew') {
+                        return false;
+                    }
 
-    $postType = $editorContext->post->post_type ?? null;
-    $postTypes = $allowedBlocks->filter(function ($value) {
-        return Str::endsWith($value, '-meta');
-    });
+                    if (
+                        in_array($postType, ['page', 'editor', 'project']) &&
+                        !block_has_support($block, 'postTypes')
+                    ) {
+                        return true;
+                    }
 
-    foreach ($postTypes as $type) {
-        if ($postType !== Str::between($type, 'crew/', '-meta')) {
-            $allowedBlocks->forget($allowedBlocks->search($type));
+                    return in_array(
+                        $postType,
+                        $block->supports['postTypes'] ?? []
+                    );
+                })
+            )
+        );
+
+        if ($postType === 'post') {
+            $allowedBlocks->add('core/image');
         }
-    }
 
-    if ($postType === 'post') {
-        $allowedBlocks = collect([
-            'crew/content',
-            'crew/post-header',
-            'core/embed'
+        if ($editorContext->name == 'core/edit-site') {
+            $allowedBlocks->add('core/navigation');
+            $allowedBlocks->add('core/navigation-link');
+            $allowedBlocks->add('core/navigation-submenu');
+        }
+
+        return array_merge($allowedBlocks->all(), [
+            'core/paragraph',
+            'core/heading',
+            'core/quote',
+            'core/list',
+            'core/list-item',
+            'core/block',
+            'crew/button',
         ]);
-    }
-
-    if ($editorContext->name == 'core/edit-site') {
-        $allowedBlocks->add('core/post-content');
-        $allowedBlocks->add('core/navigation');
-        $allowedBlocks->add('core/navigation-link');
-        $allowedBlocks->add('core/navigation-submenu');
-    }
-    
-    return array_merge($allowedBlocks->all(), [
-        'core/paragraph',
-        'core/heading',
-        'core/quote',
-        'core/list',
-        'core/list-item',
-        'core/block'
-    ]);
-}, 25, 2);
+    },
+    25,
+    2
+);
 
 /**
  * Add a new category for custom blocks
  */
-add_filter('block_categories_all' , function($categories) {
+add_filter('block_categories_all', function ($categories) {
     return array_merge([
         [
             'slug'  => 'custom',
@@ -108,20 +119,22 @@ function crew_register_all_blocks($blocks)
             [
                 'render_callback' => function ($attributes, $content, $block) {
                     $blockName = Str::after($block->name, '/');
-                    
+
                     try {
                         if (Str::startsWith($blockName, 'site-')) {
                             $section = Str::of($blockName)->after('site-');
 
-                            return View::first([
-                                $section
-                                    ->prepend('sections.')
-                                    ->append('-' . ($block->context['postType'] ?? ''))
-                                    ->toString(),
-                                $section
-                                    ->prepend('sections.')
-                                    ->toString(),
-                                ], compact('attributes', 'block', 'content')
+                            return View::first(
+                                [
+                                    $section
+                                        ->prepend('sections.')
+                                        ->append('-' . ($block->context['postType'] ?? ''))
+                                        ->toString(),
+                                    $section
+                                        ->prepend('sections.')
+                                        ->toString(),
+                                ],
+                                compact('attributes', 'block', 'content')
                             );
                         }
 

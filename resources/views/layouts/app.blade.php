@@ -26,7 +26,12 @@
                 x-intersect:leave.threshold.100="$store.header.stuck = true"
                 class="invisible absolute inset-0 -z-50 h-10 opacity-0"
             ></div>
+
+            @blockpart('header')
+
             {!! $content !!}
+
+            @blockpart('footer')
         </div>
 
         @php(do_action('get_footer'))

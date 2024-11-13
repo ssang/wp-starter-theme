@@ -103,6 +103,11 @@ class Block implements Wireable
 
     public function getAnchor()
     {
-        return Arr::get($this->attributes, 'anchor', '');
+        return Arr::get($this->base->attributes, 'anchor', '');
+    }
+
+    public function getAttribute($key)
+    {
+        return Arr::get($this->base->attributes ?? [], $key, false);
     }
 }

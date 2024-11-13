@@ -21,6 +21,8 @@ class WPBasePost
         if (is_bool($this->base)) {
             return $this->exists = false;
         }
+
+        $this->postType = get_post_type($post);
     }
 
     protected function getPublishedAt()
@@ -65,9 +67,9 @@ class WPBasePost
     {
         return self::$postType ??
             Str::of(static::class)
-                ->classBasename()
-                ->snake()
-                ->value();
+            ->classBasename()
+            ->snake()
+            ->value();
     }
 
     public static function all()

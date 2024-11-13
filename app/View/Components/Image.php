@@ -39,13 +39,12 @@ class Image extends Component
                 ($attachment = wp_get_attachment_image_src(
                     $image['id'] ?? 0,
                     $size
-                ))
-            )
+                )))
         ) {
             $this->src = $attachment[0];
         }
 
-        // $this->srcset = wp_get_attachment_image_srcset($image['id'] ?? 0, 'md');
+        $this->srcset = wp_get_attachment_image_srcset($image['id'] ?? 0, 'md');
     }
 
     /**

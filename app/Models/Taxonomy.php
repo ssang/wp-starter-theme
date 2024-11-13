@@ -14,12 +14,17 @@ class Taxonomy
     {
         $this->base =
             $category instanceof WP_Term
-                ? $category
-                : WP_Term::get_instance($category);
+            ? $category
+            : WP_Term::get_instance($category);
 
         if (is_bool($this->base)) {
             return $this->exists = false;
         }
+    }
+
+    public function getName()
+    {
+        return $this->base->name;
     }
 
     protected function getPermalink()

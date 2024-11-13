@@ -6,59 +6,21 @@
 
 namespace App;
 
-use Kucrut\Vite;
 use Illuminate\Support\Facades\Blade;
 
-// add_filter('vite_for_wp__production_assets', function ($assets, $manifest, $entry, $options) {
-//     if (empty($manifest->data->{$entry}->imports)) return $assets;
+/**
+ * Find and import all setup files
+ */
 
-//     foreach ($manifest->data->{$entry}->imports as $import) {
-//         Vite\enqueue_asset(
-//             get_stylesheet_directory() . '/dist',
-//             $import,
-//             [
-//                 'handle' => 'crew-app-imports',
-//                 'css-only' => true
-//             ]
-//         );
-//     }
+if (file_exists($path = __DIR__ . '/bootstrap')) {
+    $filters = new \FilesystemIterator($path);
 
-//     return $assets;
-
-// }, 10, 4);
-
-add_action('wp_enqueue_scripts', function (): void {
-    Vite\enqueue_asset(
-		get_stylesheet_directory() . '/dist',
-		'resources/assets/js/app.ts',
-		[
-			'handle' => 'crew-app',
-		]
-	);
-
-    wp_localize_script('crew-app', 'wpApiSettings', [
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
-    ]);
-});
-
-add_action('enqueue_block_assets', function (): void {
-    Vite\enqueue_asset(
-        get_stylesheet_directory() . '/dist',
-        'resources/assets/js/editor.ts',
-        [
-            'handle' => 'crew-editor',
-            'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post']
-        ]
-    );
-
-    wp_localize_script('crew-editor', 'wpApiSettings', [
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
-    ]);
-
-    wp_enqueue_style('dashicons');
-});
+    foreach ($filters as $filter) {
+        if ($filter->isFile()) {
+            require_once $filter->getRealPath();
+        }
+    }
+}
 
 /**
  * Register the initial theme setup.
@@ -114,6 +76,7 @@ add_action('after_setup_theme', function () {
 
 add_action('admin_menu', function () {
     remove_submenu_page('themes.php', 'nav-menus.php');
+    remove_menu_page('edit-comments.php');
 });
 
 add_action('wp_head', function () {

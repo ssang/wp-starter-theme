@@ -12,7 +12,7 @@ add_action('wp_enqueue_scripts', function (): void {
             'css-media' => 'all',
             'handle' => 'crew-app',
             'module' => true,
-            'dependencies' => ['@wordpress/interactivity'],
+            // 'dependencies' => ['@wordpress/interactivity'],
         ]
     );
 

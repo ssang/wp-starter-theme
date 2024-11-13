@@ -3,11 +3,10 @@
   "type": "wordpress-theme",
   "license": "MIT",
   "description": "WordPress starter theme with a modern development workflow",
-  "homepage": "https://crewmarketingpartners.com/",
   "authors": [
     {
-      "name": "Crew Marketing",
-      "email": "web@crewmp.com"
+      "name": "Robert Lee",
+      "email": "rslee1247@gmail.com"
     }
   ],
   "keywords": [
@@ -27,11 +26,6 @@
       "type": "git",
       "url": "git@bitbucket.org:crewmarketing/create-block.git",
       "branch": "master"
-    },
-    {
-      "type": "git",
-      "url": "git@github.com:ssang/acorn.git",
-      "branch": "master"
     }
   ],
   "require": {
@@ -39,7 +33,7 @@
     "kucrut/vite-for-wp": "^0.9.0",
     "livewire/livewire": "^3.5",
     "log1x/acf-composer": "^3.0.23",
-    "roots/acorn": "dev-fse-group-templates",
+    "roots/acorn": "^4.3.0",
     "roots/acorn-fse-helper": "^1.0"
   },
   "require-dev": {

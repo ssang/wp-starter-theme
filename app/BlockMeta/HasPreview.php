@@ -12,6 +12,6 @@ add_filter('block_type_metadata', function ($metadata) {
     ];
 
     $metadata['example']['viewportWidth'] = $metadata['example']['viewportWidth'] ?? 800;
-    
+
     return $metadata;
-}, 10, 2 );
+}, 10, 2);

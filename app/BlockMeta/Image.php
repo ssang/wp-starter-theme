@@ -25,7 +25,7 @@ use Illuminate\Support\Arr;
                 'image.default',
                 [
                     'id' => null,
-                    'url' => null,
+                    'src' => null,
                 ]
             );
         }
@@ -57,13 +57,16 @@ use Illuminate\Support\Arr;
                 'image.default.mobile',
                 [
                     'id' => null,
-                    'url' => null,
+                    'src' => null,
                 ]
             );
         }
     },
 ]);
 
+/**
+ * Add Default Image Attributes based on Block Support
+ */
 add_filter(
     'render_block_data',
     function ($block) {
@@ -78,7 +81,7 @@ add_filter(
         $blockAttributes = Arr::has($block, 'attrs') ? $block['attrs'] : [];
 
         $blockAttributes = Arr::add($blockAttributes, 'image.id', 0);
-        $blockAttributes = Arr::add($blockAttributes, 'image.url', '');
+        $blockAttributes = Arr::add($blockAttributes, 'image.src', '');
 
         if (block_has_support($blockType, ['image', 'imagePosition'], false)) {
             $blockAttributes = Arr::add(
@@ -104,7 +107,7 @@ add_filter(
         if (block_has_support($blockType, ['image', 'mobile'], false)) {
             $blockAttributes = Arr::add($blockAttributes, 'image.mobile', [
                 'id' => 0,
-                'url' => '',
+                'src' => '',
             ]);
         }
 
