@@ -26,7 +26,7 @@ export default {
     }
   },
   optimizeDeps: {
-    include: ['tailwind.config.jts']
+    include: ['tailwind.config.ts']
   },
   build: {
     commonjsOptions: {
