@@ -43,24 +43,6 @@ class Block implements Wireable
     {
         $styles = [];
 
-        if (Arr::has($this->attributes, 'style.spacing.margin')) {
-            $styles[] =
-                'margin-top: ' .
-                $this->getStyleAttribute('spacing.margin.top', true);
-            $styles[] =
-                'margin-bottom: ' .
-                $this->getStyleAttribute('spacing.margin.bottom', true);
-        }
-
-        if (Arr::has($this->attributes, 'style.spacing.padding')) {
-            $styles[] =
-                'padding-top: ' .
-                $this->getStyleAttribute('spacing.padding.top', true);
-            $styles[] =
-                'padding-bottom: ' .
-                $this->getStyleAttribute('spacing.padding.bottom', true);
-        }
-
         if (Arr::has($this->attributes, 'textColor')) {
             $styles[] =
                 '--text-color: ' . $this->getColorVariable('textColor', true);
