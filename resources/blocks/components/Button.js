@@ -44,7 +44,7 @@ export default function Button({
           <RichText
             tagName={ 'span' }
             className={``}
-            placeholder={ __(placeholder, 'crew') }
+            placeholder={ __(placeholder, 'takt') }
             value={ link.title }
             allowedFormats={ [] }
             onChange={ onChange }

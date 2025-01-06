@@ -5,7 +5,7 @@ import ImageSettingsPanel from './image';
 
 addFilter(
   'editor.BlockEdit',
-  'crew/add-image-controls',
+  'takt/add-image-controls',
   createHigherOrderComponent((BlockEdit) => {
     return (props) => {
       return (

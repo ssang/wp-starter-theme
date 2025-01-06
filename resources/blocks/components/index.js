@@ -3,8 +3,8 @@ export { default as Button } from './Button'
 export { default as PlaceholderImage } from './PlaceholderImage'
 
 export const Content_Blocks = [
-  'crew/button',
-  'crew/image',
+  'takt/button',
+  'takt/image',
   'core/paragraph',
   'core/heading',
   'core/quote',

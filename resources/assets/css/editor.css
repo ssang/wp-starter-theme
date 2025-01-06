@@ -16,7 +16,7 @@
         margin-left: 6rem !important;
     }
 
-    &:has(.wp-block-crew-button.modal-open) .block-editor-block-list__block-popover.is-positioned {
+    &:has(.wp-block-takt-button.modal-open) .block-editor-block-list__block-popover.is-positioned {
         z-index: 100 !important
     }
 }

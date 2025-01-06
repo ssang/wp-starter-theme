@@ -21,7 +21,7 @@ add_filter(
                 Arr::where($blockTypes, function ($block, $name) use (
                     $postType
                 ) {
-                    if (Str::before($name, '/') != 'crew') {
+                    if (Str::before($name, '/') != 'takt') {
                         return false;
                     }
 
@@ -57,7 +57,7 @@ add_filter(
             'core/list',
             'core/list-item',
             'core/block',
-            'crew/button',
+            'takt/button',
         ]);
     },
     25,
@@ -71,7 +71,7 @@ add_filter('block_categories_all', function ($categories) {
     return array_merge([
         [
             'slug'  => 'custom',
-            'title' => 'Crew'
+            'title' => 'Takt'
         ],
         [
             'slug' => 'meta',
@@ -87,7 +87,7 @@ add_filter('block_categories_all', function ($categories) {
 add_action('init', function () {
     register_block_pattern_category(
         'custom',
-        ['label' => __('Crew', 'crew')]
+        ['label' => __('Takt', 'takt')]
     );
 });
 
@@ -102,17 +102,17 @@ add_action('init', function () {
 
     $blocks = new \FilesystemIterator($path);
 
-    crew_register_all_blocks($blocks);
+    takt_register_all_blocks($blocks);
 });
 
-function crew_register_all_blocks($blocks)
+function takt_register_all_blocks($blocks)
 {
     foreach ($blocks as $dir) {
         if (! file_exists($dir->getPathname() . '/block.json')) {
             continue;
         }
 
-        crew_register_all_blocks(new \FilesystemIterator($dir->getPathname()));
+        takt_register_all_blocks(new \FilesystemIterator($dir->getPathname()));
 
         $block = register_block_type(
             $dir->getPathname(),

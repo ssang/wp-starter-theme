@@ -1,5 +1,5 @@
 {
-  "name": "crewmarketing/starter-theme",
+  "name": "takt/starter-theme",
   "type": "wordpress-theme",
   "license": "MIT",
   "description": "WordPress starter theme with a modern development workflow",
@@ -24,7 +24,7 @@
   "repositories": [
     {
       "type": "git",
-      "url": "git@bitbucket.org:crewmarketing/create-block.git",
+      "url": "git@github.com:ssang/wp-create-block.git",
       "branch": "master"
     }
   ],
@@ -38,7 +38,7 @@
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "3.7.1",
-    "crew/create-block": "dev-master"
+    "takt/create-block": "dev-master"
   },
   "suggest": {
     "log1x/sage-directives": "A collection of useful Blade directives for WordPress and Sage (^1.0).",

@@ -30,7 +30,7 @@ add_filter(
             $postTypeObject = get_post_type_object($postType);
 
             if ($post->post_name === $postTypeObject->has_archive) {
-                $post_states['crew_cpt_archive'] =
+                $post_states['takt_cpt_archive'] =
                     $postTypeObject->labels->name . ' Page';
             }
         }

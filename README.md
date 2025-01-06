@@ -1,4 +1,4 @@
-# Crew Starter Theme
+# Takt Starter Theme
 
 ## Development
 
