@@ -30,7 +30,7 @@
   ],
   "require": {
     "php": "^8.0",
-    "kucrut/vite-for-wp": "^0.9.0",
+    "kucrut/vite-for-wp": "^0.10.0",
     "livewire/livewire": "^3.5",
     "log1x/acf-composer": "^3.0.23",
     "roots/acorn": "^4.3.0",
