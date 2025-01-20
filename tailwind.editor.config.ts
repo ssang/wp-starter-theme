@@ -1,7 +1,6 @@
 module.exports = {
-  important: ':is(.block-editor-block-inspector, .is-root-container, .components-popover)',
-
-  presets: [
-    require('./tailwind.config.js')
-  ]
-}
+  content: ['./resources/{blocks,assets}/**/*.{js,tsx,ts}'],
+  important:
+    ':is(.block-editor-block-inspector, .is-root-container, .components-popover)',
+  presets: [require('./tailwind.config.ts')]
+};

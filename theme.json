@@ -48,34 +48,36 @@
     },
     "spacing": {
       "padding": true,
-      "units": [
-        "px",
-        "%",
-        "em",
-        "rem",
-        "vw",
-        "vh"
+      "units": ["rem"],
+      "customSpacingSize": false,
+      "defaultSpacingSizes": false,
+      "spacingSizes": [
+        {
+          "name": "Small",
+          "slug": "small",
+          "size": "2.5rem"
+        },
+        {
+          "name": "Medium",
+          "slug": "medium",
+          "size": "5rem"
+        },
+        {
+          "name": "Large",
+          "slug": "large",
+          "size": "10rem"
+        }
       ]
     },
     "typography": {
+      "defaultFontSizes": false,
       "customFontSize": false,
-      "fontFamilies": [
-        {
-          "name": "ui-sans-serif",
-          "slug": "sans",
-          "fontFamily": "ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\""
-        },
-        {
-          "name": "ui-serif",
-          "slug": "serif",
-          "fontFamily": "ui-serif,Georgia,Cambria,\"Times New Roman\",Times,serif"
-        },
-        {
-          "name": "ui-monospace",
-          "slug": "mono",
-          "fontFamily": "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace"
-        }
-      ],
+      "letterSpacing": false,
+      "textTransform": false,
+      "fontStyle": false,
+      "fontWeight": false,
+      "textDecoration": false,
+      "fontFamilies": [],
       "fontSizes": [
         {
           "name": "xs",
