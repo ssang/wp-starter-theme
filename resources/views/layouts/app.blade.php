@@ -5,8 +5,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        @php(do_action('get_header'))
         @php(wp_head())
+        @php(do_action('get_header'))
     </head>
 
     <body @php(body_class())>
@@ -27,11 +27,11 @@
                 class="invisible absolute inset-0 -z-50 h-10 opacity-0"
             ></div>
 
-            @blockpart('header')
+            {!! $header !!}
 
             {!! $content !!}
 
-            @blockpart('footer')
+            {!! $footer !!}
         </div>
 
         @php(do_action('get_footer'))
