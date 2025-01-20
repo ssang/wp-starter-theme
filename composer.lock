@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7edad86899d2d788e9050f651e324344",
+    "content-hash": "21e46ed2dd79cb2b1f4cb62d5ee0293d",
     "packages": [
         {
             "name": "brick/math",
@@ -2218,16 +2218,16 @@
         },
         {
             "name": "kucrut/vite-for-wp",
-            "version": "v0.9.4",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kucrut/vite-for-wp.git",
-                "reference": "bdc1bc5f08c24b819a3f93915e8af0142a44d589"
+                "reference": "b582254a7e4f6976c0798717c83d75eba093810f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kucrut/vite-for-wp/zipball/bdc1bc5f08c24b819a3f93915e8af0142a44d589",
-                "reference": "bdc1bc5f08c24b819a3f93915e8af0142a44d589",
+                "url": "https://api.github.com/repos/kucrut/vite-for-wp/zipball/b582254a7e4f6976c0798717c83d75eba093810f",
+                "reference": "b582254a7e4f6976c0798717c83d75eba093810f",
                 "shasum": ""
             },
             "require-dev": {
@@ -2251,9 +2251,9 @@
             "description": "Vite integration for WordPress plugins and themes development.",
             "support": {
                 "issues": "https://github.com/kucrut/vite-for-wp/issues",
-                "source": "https://github.com/kucrut/vite-for-wp/tree/v0.9.4"
+                "source": "https://github.com/kucrut/vite-for-wp/tree/v0.10.0"
             },
-            "time": "2024-11-25T12:25:28+00:00"
+            "time": "2024-12-18T07:15:27+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -2640,16 +2640,16 @@
         },
         {
             "name": "log1x/acf-composer",
-            "version": "v3.2.3",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Log1x/acf-composer.git",
-                "reference": "6c22d9f83a44ad5df7a1423ac2f200b3ae5c0346"
+                "reference": "eb2d1bb43addecfddd64a4013b489e5576477a41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Log1x/acf-composer/zipball/6c22d9f83a44ad5df7a1423ac2f200b3ae5c0346",
-                "reference": "6c22d9f83a44ad5df7a1423ac2f200b3ae5c0346",
+                "url": "https://api.github.com/repos/Log1x/acf-composer/zipball/eb2d1bb43addecfddd64a4013b489e5576477a41",
+                "reference": "eb2d1bb43addecfddd64a4013b489e5576477a41",
                 "shasum": ""
             },
             "require": {
@@ -2687,7 +2687,7 @@
             "description": "Create fields, blocks, option pages, and widgets using ACF Builder and Sage 10",
             "support": {
                 "issues": "https://github.com/Log1x/acf-composer/issues",
-                "source": "https://github.com/Log1x/acf-composer/tree/v3.2.3"
+                "source": "https://github.com/Log1x/acf-composer/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -2695,7 +2695,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-21T00:54:09+00:00"
+            "time": "2025-01-18T07:29:05+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2805,12 +2805,12 @@
             "version": "2.72.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
+                "url": "https://github.com/CarbonPHP/carbon.git",
                 "reference": "1e9d50601e7035a4c61441a208cb5bed73e108c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/1e9d50601e7035a4c61441a208cb5bed73e108c5",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/1e9d50601e7035a4c61441a208cb5bed73e108c5",
                 "reference": "1e9d50601e7035a4c61441a208cb5bed73e108c5",
                 "shasum": ""
             },
