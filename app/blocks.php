@@ -108,7 +108,7 @@ add_action('init', function () {
 function takt_register_all_blocks($blocks)
 {
     foreach ($blocks as $dir) {
-        if (! file_exists($dir->getPathname() . '/block.json')) {
+        if (! $dir->isDir() || ! file_exists($dir->getPathname() . '/block.json')) {
             continue;
         }
 
