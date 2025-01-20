@@ -4,7 +4,7 @@ namespace App\Bootstrap;
 
 use Kucrut\Vite;
 
-add_action('wp_enqueue_scripts', function (): void {
+add_action('get_header', function (): void {
     Vite\enqueue_asset(
         get_stylesheet_directory() . '/dist',
         'resources/assets/js/app.ts',
@@ -12,7 +12,6 @@ add_action('wp_enqueue_scripts', function (): void {
             'css-media' => 'all',
             'handle' => 'takt-app',
             'module' => true,
-            // 'dependencies' => ['@wordpress/interactivity'],
         ]
     );
 
@@ -23,6 +22,10 @@ add_action('wp_enqueue_scripts', function (): void {
 });
 
 add_action('enqueue_block_assets', function (): void {
+    if (! is_admin()) {
+        return;
+    }
+
     Vite\enqueue_asset(
         get_stylesheet_directory() . '/dist',
         'resources/assets/js/editor.ts',
