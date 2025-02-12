@@ -1,11 +1,8 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-@import './components/_components';
-@import './gutenberg/_core-blocks';
-
-@config "../../../tailwind.editor.config.ts";
+body.modal-open {
+  .components-popover__fallback-container {
+    display: none;
+  }
+}
 
 .components-resizable-box__container {
   min-height: 75vh;
@@ -24,11 +21,11 @@
 }
 
 .editor-styles-wrapper {
-  --bg-color: theme('colors.white');
-  --primary-color: theme('colors.black');
-  --secondary-color: theme('colors.red.500');
-  --title-font: theme('fontFamily.serif');
-  --body-font: theme('fontFamily.sans');
+  --bg-color: var(--color-white);
+  --primary-color: var(--color-black);
+  --secondary-color: var(--color-red-500);
+  --title-font: var(--font-family-serif);
+  --body-font: var(--font-family-sans);
 
   overflow-x: clip;
   font-family: var(--body-font);

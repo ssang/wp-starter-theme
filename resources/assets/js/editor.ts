@@ -2,4 +2,4 @@ import './_fonts';
 
 // import './editor/_gutenberg'
 
-import '../css/editor.css';
+import '../css/app.css';

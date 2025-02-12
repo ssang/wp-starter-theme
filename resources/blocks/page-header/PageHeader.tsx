@@ -1,13 +1,11 @@
-import { __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n';
 
-import { useBlockProps } from '@wordpress/block-editor'
+import { useBlockProps } from '@wordpress/block-editor';
 
 export default function Edit({ attributes, setAttributes }) {
   return (
-    <div { ...useBlockProps() }>
-      <h1 className="font-heading py-10 text-center text-5xl">
-        Page Header
-      </h1>
+    <div {...useBlockProps()}>
+      <h1 className="font-heading py-10 text-center text-5xl">Page Header</h1>
     </div>
   );
 }
