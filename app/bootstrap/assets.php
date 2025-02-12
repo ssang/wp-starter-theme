@@ -4,14 +4,17 @@ namespace App\Bootstrap;
 
 use Kucrut\Vite;
 
-add_action('get_header', function (): void {
+add_action('enqueue_block_assets', function (): void {
+    if (is_admin()) {
+        return;
+    }
+
     Vite\enqueue_asset(
         get_stylesheet_directory() . '/dist',
         'resources/assets/js/app.ts',
         [
             'css-media' => 'all',
             'handle' => 'takt-app',
-            'module' => true,
         ]
     );
 
@@ -21,8 +24,8 @@ add_action('get_header', function (): void {
     ]);
 });
 
-add_action('enqueue_block_assets', function (): void {
-    if (! is_admin()) {
+add_action('enqueue_block_editor_assets', function (): void {
+    if (!is_admin()) {
         return;
     }
 
@@ -31,7 +34,15 @@ add_action('enqueue_block_assets', function (): void {
         'resources/assets/js/editor.ts',
         [
             'handle' => 'takt-editor',
-            'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
+        ]
+    );
+
+    Vite\enqueue_asset(
+        get_stylesheet_directory() . '/dist',
+        'resources/assets/js/editor.ts',
+        [
+            'handle' => 'takt-editor-css',
+            'css-only' => true,
         ]
     );
 
