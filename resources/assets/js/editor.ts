@@ -1,5 +1,5 @@
-import './_fonts'
+import './_fonts';
 
-import './editor/_gutenberg'
+// import './editor/_gutenberg'
 
-import '../css/editor.css'
+import '../css/editor.css';

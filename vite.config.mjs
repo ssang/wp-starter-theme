@@ -14,6 +14,7 @@ export default {
     wp_scripts()
   ],
   server: {
+    cors: true,
     watch: {
       ignored: ['**/vendor/**']
     }

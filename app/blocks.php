@@ -26,7 +26,7 @@ add_filter(
                     }
 
                     if (
-                        in_array($postType, ['page', 'editor', 'project']) &&
+                        // in_array($postType, ['page', 'editor']) &&
                         !block_has_support($block, 'postTypes')
                     ) {
                         return true;
@@ -51,12 +51,15 @@ add_filter(
         }
 
         return array_merge($allowedBlocks->all(), [
+            'core/navigation',
+            'core/navigation-link',
             'core/paragraph',
             'core/heading',
             'core/quote',
             'core/list',
             'core/list-item',
             'core/block',
+            'core/image',
             'takt/button',
         ]);
     },
@@ -103,6 +106,12 @@ add_action('init', function () {
     $blocks = new \FilesystemIterator($path);
 
     takt_register_all_blocks($blocks);
+
+    if (file_exists($path = get_stylesheet_directory() . '/dist/blocks/cpt-meta')) {
+        $metaBlocks = new \FilesystemIterator($path . '/cpt-meta');
+
+        takt_register_all_blocks($metaBlocks);
+    }
 });
 
 function takt_register_all_blocks($blocks)
@@ -117,7 +126,7 @@ function takt_register_all_blocks($blocks)
         $block = register_block_type(
             $dir->getPathname(),
             [
-                'render_callback' => function ($attributes, $content, $block) {
+                'render_callback' => function ($attributes, $children, $block) {
                     $blockName = Str::after($block->name, '/');
 
                     try {
@@ -134,7 +143,7 @@ function takt_register_all_blocks($blocks)
                                         ->prepend('sections.')
                                         ->toString(),
                                 ],
-                                compact('attributes', 'block', 'content')
+                                compact('attributes', 'block', 'children')
                             );
                         }
 
@@ -144,7 +153,7 @@ function takt_register_all_blocks($blocks)
                             'content.' . Str::beforeLast($blockName, '-meta'),
                             'blocks.partials.' . $blockName,
                             'blocks.' . $blockName
-                        ], compact('attributes', 'block', 'content'));
+                        ], compact('attributes', 'block', 'children'));
                     } catch (\Exception $e) {
                         if ($block->block_type->category != 'meta') {
                             return '<span style="text-align: center; font-size: 4rem">View does not exist for ' . $blockName . '</span>';
