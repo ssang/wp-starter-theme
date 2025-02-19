@@ -20,7 +20,7 @@
         {
           "name": "Current",
           "slug": "current",
-          "color": "currentcolor"
+          "color": "currentColor"
         },
         {
           "name": "Transparent",

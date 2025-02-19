@@ -23,6 +23,7 @@ add_action('enqueue_block_assets', function (): void {
         'resources/assets/js/editor.ts',
         [
             'handle' => 'takt-editor',
+            'dependencies' => ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
         ]
     );
 
